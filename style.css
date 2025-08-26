@@ -16,11 +16,37 @@ body {
   width: 100%;
   max-width: 1440px;
   z-index: 1000;
+
+  display: flex;                  /* делаем flex-контейнер */
+  justify-content: space-between; /* картинки слева, иконка справа */
+  align-items: center;            /* вертикальное выравнивание */
+  padding: 0 16px;                /* отступы по бокам, можно менять */
+  box-sizing: border-box;         /* чтобы padding не ломал ширину */
 }
 
-.header img {
-  width: 100%;
+/* Обычные картинки-плашки */
+.header img.desktop,
+.header img.mobile {
+  width: auto;        /* убираем 100%, чтобы не растягивало */
+  max-height: 60px;   /* ограничиваем высоту (подберите под вашу плашку) */
   display: block;
+}
+
+/* Ссылка на Telegram */
+.telegram-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.telegram-icon {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.2s ease;
+}
+
+.telegram-icon:hover {
+  transform: scale(1.15);
 }
 
 /* Отступ под плашку */
