@@ -1,52 +1,62 @@
-body {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #fff;
-  font-family: sans-serif;
+:root {
+  --header-h-desktop: 80px;
+  --header-h-mobile: 60px;
 }
 
-/* Фиксированная плашка */
+/* Фиксированная шапка, всегда по центру экрана */
 .header {
   position: fixed;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);     /* центрируем при max-width */
   width: 100%;
   max-width: 1440px;
+  height: var(--header-h-desktop);  /* фиксированная высота */
   z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;      /* ваш контент слева */
+  padding: 0 16px;
+  box-sizing: border-box;
+  overflow: hidden;                 /* чтобы картинка не выпирала */
 }
 
-.header img {
+/* Картинки плашки занимают весь .header, не меняя его высоту */
+.header img.desktop,
+.header img.mobile {
+  position: absolute;
+  inset: 0;              /* top/right/bottom/left: 0 */
   width: 100%;
+  height: 100%;
+  object-fit: cover;     /* или contain — если не хотите обрезки */
   display: block;
 }
 
-/* Отступ под плашку */
+/* Иконка Telegram (пример) фиксируется внутри шапки справа по центру */
+.telegram-link {
+  margin-left: auto;
+  position: relative;
+  z-index: 1;            /* поверх фоновой картинки */
+}
+.telegram-icon {
+  width: 32px;
+  height: 32px;
+  transition: transform .2s;
+}
+.telegram-icon:hover { transform: scale(1.15); }
+
+/* Отступ под шапку — ровно высотой шапки (чтобы контент не заезжал) */
 body::before {
   content: "";
   display: block;
-  height: 80px; /* высота десктопной плашки */
+  height: var(--header-h-desktop);
 }
 
-/* Блоки */
-.block {
-  width: 100%;
-  max-width: 1440px;
-}
-
-.block img {
-  width: 100%;
-  display: block;
-}
-
-/* Отображение desktop / mobile */
-img.desktop { display: block; }
-img.mobile { display: none; }
-
+/* Переключение на мобильный брейкпоинт */
 @media (max-width: 768px) {
+  .header { height: var(--header-h-mobile); }
+  body::before { height: var(--header-h-mobile); }
   img.desktop { display: none; }
   img.mobile { display: block; }
-  body::before { height: 60px; } /* под высоту мобильной плашки */
 }
